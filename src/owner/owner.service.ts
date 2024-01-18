@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Owner } from './schemas/owner.schema';
 import * as mongoose from 'mongoose';
-import ownersData from '../data/owners';
+import ownersData from '../../data/owners';
 
 @Injectable()
 export class OwnerService {

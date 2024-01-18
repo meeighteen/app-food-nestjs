@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Owner } from './schemas/owner.schema';
+import { Owner } from './owner.entity';
 import * as mongoose from 'mongoose';
 import ownersData from '../../data/owners';
 

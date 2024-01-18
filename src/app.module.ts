@@ -3,9 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OwnerModule } from './owner/owner.module';
 import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
 import { BusinessModule } from './business/business.module';
 import { SectionModule } from './section/section.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -13,7 +13,18 @@ import { SectionModule } from './section/section.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.DB_URI),
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      host: 'localhost',
+      port: 27017,
+      username: 'meeighteen',
+      password: 'qzwlDcEiu9CQzcvx',
+      database: 'app-food',
+      entities: [],
+      synchronize: true,
+      // autoLoadEntities: true,
+    }),
+    // MongooseModule.forRoot(process.env.DB_URI),
     OwnerModule,
     BusinessModule,
     SectionModule,

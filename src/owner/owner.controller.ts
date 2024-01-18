@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { OwnerService } from './owner.service';
-import { Owner } from './schemas/owner.schema';
+import { Owner } from './owner.entity';
 
 @Controller('owner')
 export class OwnerController {

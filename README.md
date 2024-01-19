@@ -24,7 +24,7 @@ $ yarn start:prod
 $ yarn start:pm2:prod
 
 # stop project with pm2
-$ yarn pm2:stop"
+$ yarn pm2:stop
 
 # restart project with pm2
 $ yarn pm2:restart

@@ -12,13 +12,28 @@ $ yarn install
 
 ```bash
 # development
-$ yarn run start
+$ yarn start
 
 # watch mode
-$ yarn run start:dev
+$ yarn start:dev
 
 # production mode
-$ yarn run start:prod
+$ yarn start:prod
+
+# start project with pm2
+$ yarn start:pm2:prod
+
+# stop project with pm2
+$ yarn pm2:stop"
+
+# restart project with pm2
+$ yarn pm2:restart
+
+# monit pm2 stats
+$ yarn pm2:monit
+
+# list pm2 projects
+$ yarn pm2:list
 ```
 
 ## Test

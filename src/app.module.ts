@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OwnerModule } from './owner/owner.module';
 import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
 import { BusinessModule } from './business/business.module';
 import { SectionModule } from './section/section.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -13,7 +14,14 @@ import { SectionModule } from './section/section.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.DB_URI),
+
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      url: process.env.DB_URI,
+      entities: [join(__dirname, '**/**.entity{.ts,.js}')],
+      synchronize: true,
+      logging: true,
+    }),
     OwnerModule,
     BusinessModule,
     SectionModule,

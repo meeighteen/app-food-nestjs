@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { OwnerController } from './owner.controller';
 import { OwnerService } from './owner.service';
-import { OwnerSchema } from './schemas/owner.schema';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Owner } from './owner.entity';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]),
-  ],
+  imports: [TypeOrmModule.forFeature([Owner])],
+  exports: [TypeOrmModule],
   controllers: [OwnerController],
   providers: [OwnerService],
 })

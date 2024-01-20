@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { OwnerService } from './owner.service';
-import { Owner } from './schemas/owner.schema';
+import { Owner } from './owner.entity';
+import { OwnerInput } from './owner.input';
 
 @Controller('owner')
 export class OwnerController {
@@ -11,12 +12,12 @@ export class OwnerController {
     return this.ownerService.findAll();
   }
 
-  @Post()
+  @Post('create')
   async createOwner(
     @Body()
-    owner: Owner,
+    input: OwnerInput,
   ): Promise<Owner> {
-    return this.ownerService.create(owner);
+    return this.ownerService.create(input);
   }
 
   @Post('seed')

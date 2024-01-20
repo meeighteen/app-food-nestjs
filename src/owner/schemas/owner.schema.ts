@@ -1,23 +1,30 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { EntitySchema } from 'typeorm';
+import { Owner } from './../owner.entity';
 
-@Schema({
-  timestamps: true,
-})
-export class Owner {
-  @Prop()
-  names: string;
-
-  @Prop()
-  email: string;
-
-  @Prop()
-  password: string;
-
-  @Prop()
-  businessID: string;
-
-  @Prop()
-  active: boolean;
-}
-
-export const OwnerSchema = SchemaFactory.createForClass(Owner);
+export const OwnerSchema = new EntitySchema<Owner>({
+  name: 'Owner',
+  target: Owner,
+  columns: {
+    _id: {
+      type: Number,
+      primary: true,
+      // generated: true,
+    },
+    firstName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    password: {
+      type: String,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+  },
+});

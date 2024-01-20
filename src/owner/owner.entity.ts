@@ -1,22 +1,22 @@
-// import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn } from 'typeorm';
 
-// @Entity()
-// export class Owner {
-//   @PrimaryGeneratedColumn()
-//   _id: number;
+@Entity()
+export class Owner {
+  @ObjectIdColumn()
+  _id: number;
 
-//   @Column()
-//   firstName: string;
+  @Column()
+  firstName: string;
 
-//   @Column()
-//   lastName: string;
+  @Column()
+  lastName: string;
 
-//   @Column()
-//   email: string;
+  @Column()
+  email: string;
 
-//   @Column()
-//   password: string;
+  @Column()
+  password: string;
 
-//   @Column({ default: true })
-//   isActive: boolean;
-// }
+  @Column({ default: true })
+  isActive: boolean;
+}

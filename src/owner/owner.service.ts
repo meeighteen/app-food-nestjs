@@ -1,35 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Owner } from './schemas/owner.schema';
-import * as mongoose from 'mongoose';
+import { Owner } from './owner.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MongoRepository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 import ownersData from '../data/owners';
+import { OwnerInput } from './owner.input';
 
 @Injectable()
 export class OwnerService {
   constructor(
-    @InjectModel(Owner.name)
-    private ownerModel: mongoose.Model<Owner>,
+    @InjectRepository(Owner)
+    private readonly ownerRepository: MongoRepository<Owner>,
   ) {}
 
-  async seed(): Promise<void> {
-    const ownersCount = await this.ownerModel.countDocuments();
-    if (ownersCount < 2) {
-      const usersPromises = ownersData.map(async (owner) => {
-        return new this.ownerModel(owner).save();
-      });
-
-      const promises = await Promise.all(usersPromises);
-      console.log(promises);
-    }
-  }
-
   async findAll(): Promise<Owner[]> {
-    const owners = await this.ownerModel.find();
+    const owners = await this.ownerRepository.find();
+    console.log('owners ', owners);
     return owners;
   }
 
-  async create(owner: Owner): Promise<Owner> {
-    const res = await this.ownerModel.create(owner);
-    return res;
+  async create(input: OwnerInput): Promise<Owner> {
+    const owner = new Owner();
+    owner._id = uuidv4();
+    owner.firstName = input.firstName;
+    owner.lastName = input.lastName;
+    owner.email = input.email;
+    owner.password = input.password;
+
+    return this.ownerRepository.save(owner);
+  }
+
+  async seed(): Promise<void> {
+    const ownersCount = await this.ownerRepository.countDocuments();
+    if (ownersCount < 2) {
+      const ownerPromises = ownersData.map(async (owner) => {
+        return this.ownerRepository.save(owner);
+      });
+
+      const promises = await Promise.all(ownerPromises);
+      console.log(promises);
+    }
   }
 }

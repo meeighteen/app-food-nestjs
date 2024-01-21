@@ -1,9 +1,7 @@
-import { IOwner } from '../../../common/models/owner/interfaces/owner.interface';
-// import { v4 as uuidv4 } from 'uuid';
+import { IOwner } from '../../../models/owner/interfaces/owner.interface';
 
 export const owners: IOwner[] = [
   {
-    // _id: uuidv4(),
     firstName: 'Josue',
     lastName: 'Mamani',
     email: 'josuee.ald@gmail.com',
@@ -11,7 +9,6 @@ export const owners: IOwner[] = [
     isActive: true,
   },
   {
-    // _id: uuidv4(),
     firstName: 'Leandro',
     lastName: 'Ramos',
     email: 'leandro1998@gmail.com',

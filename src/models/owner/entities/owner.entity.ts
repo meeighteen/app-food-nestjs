@@ -1,5 +1,5 @@
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
-import { IOwner } from '../common/models/owner/interfaces/owner.interface';
+import { IOwner } from '../interfaces/owner.interface';
 
 /**
  * Entity Schema for Owner.
@@ -17,7 +17,9 @@ export class Owner implements IOwner {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   email: string;
 
   @Column()

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Owner } from '../../../models/owner/entities/owner.entity';
 
 /**
  * Import and provide database typeorm(mongodb) related classes.
@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: process.env.DB_URI,
-      entities: [join(__dirname, '**/**.entity{.ts,.js}')],
+      entities: [Owner],
       synchronize: true,
       logging: true,
     }),

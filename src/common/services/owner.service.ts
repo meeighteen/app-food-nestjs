@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Owner } from './owner.entity';
+import { Owner } from '../../models/owner/entities/owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
-import { owners } from '../database/seeders/owner/data';
-import { IOwner } from '../common/models/owner/interfaces/owner.interface';
+// import { v4 as uuidv4 } from 'uuid';
+import { owners as ownersData } from '../../database/seeders/owner/data';
+// import { IOwner } from '../../models/owner/interfaces/owner.interface';
+import { CreateOwnerDto } from '../dto/validators/createOwnerDto';
 
 @Injectable()
 export class OwnerService {
@@ -19,9 +20,8 @@ export class OwnerService {
     return owners;
   }
 
-  async create(input: IOwner): Promise<Owner> {
+  async create(input: CreateOwnerDto): Promise<Owner> {
     const owner = new Owner();
-    owner._id = uuidv4();
     owner.firstName = input.firstName;
     owner.lastName = input.lastName;
     owner.email = input.email;
@@ -33,7 +33,7 @@ export class OwnerService {
   async seed(): Promise<void> {
     const ownersCount = await this.ownerRepository.countDocuments();
     if (ownersCount < 2) {
-      const ownerPromises = owners.map(async (owner) => {
+      const ownerPromises = ownersData.map(async (owner) => {
         return this.ownerRepository.save(owner);
       });
 

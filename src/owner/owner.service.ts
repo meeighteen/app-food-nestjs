@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Owner } from '../models/owner/entities/owner.entity';
+import { Owner } from './owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { owners } from '../../database/seeders/owner/data';
-import { IOwner } from '../models/owner/interfaces/owner.interface';
+import { owners } from '../database/seeders/owner/data';
+import { IOwner } from '../common/models/owner/interfaces/owner.interface';
 
 @Injectable()
 export class OwnerService {

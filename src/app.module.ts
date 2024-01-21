@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { OwnerModule } from './common/modules/owner.module';
+import { OwnerModule } from './owner/owner.module';
 import { BusinessModule } from './common/modules/business.module';
 import { SectionModule } from './common/modules/section.module';
 import { AppConfigModule } from './config/app/config.module';
@@ -19,8 +19,8 @@ import { DatabaseProviderModule } from './common/providers/database/mongodb/prov
     AppConfigModule,
     DatabaseProviderModule,
     OwnerModule,
-    BusinessModule,
-    SectionModule,
+    // BusinessModule,
+    // SectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

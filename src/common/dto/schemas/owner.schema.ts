@@ -1,5 +1,5 @@
 import { EntitySchema } from 'typeorm';
-import { Owner } from '../../models/owner/entities/owner.entity';
+import { Owner } from '../../../owner/owner.entity';
 
 export const OwnerSchema = new EntitySchema<Owner>({
   name: 'Owner',

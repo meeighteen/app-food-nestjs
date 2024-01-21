@@ -1,5 +1,5 @@
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
-import { IOwner } from '../interfaces/owner.interface';
+import { IOwner } from '../common/models/owner/interfaces/owner.interface';
 
 /**
  * Entity Schema for Owner.

@@ -23,7 +23,8 @@
     "pm2:list": "pm2 ls",
     "pm2:restart": "pm2 restart main",
     "pm2:stop": "pm2 stop main",
-    "pm2:monit": "pm2 monit"
+    "pm2:monit": "pm2 monit",
+    "pm2:log": "pm2 logs"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

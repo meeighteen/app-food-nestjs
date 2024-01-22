@@ -1,5 +1,5 @@
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
-import { IOwner } from '../interfaces/owner.interface';
+// import { IOwner } from '../interfaces/owner.interface';
 
 /**
  * Entity Schema for Owner.
@@ -7,23 +7,15 @@ import { IOwner } from '../interfaces/owner.interface';
  * @class
  */
 @Entity()
-export class Owner implements IOwner {
+export class Section {
   @ObjectIdColumn()
   _id: string;
 
   @Column()
-  firstName: string;
+  name: string;
 
   @Column()
-  lastName: string;
-
-  @Column({
-    unique: true,
-  })
-  email: string;
-
-  @Column()
-  password: string;
+  description: string;
 
   @Column({ default: true })
   isActive: boolean;

@@ -24,7 +24,9 @@
     "pm2:restart": "pm2 restart main",
     "pm2:stop": "pm2 stop main",
     "pm2:monit": "pm2 monit",
-    "pm2:log": "pm2 logs"
+    "pm2:log": "pm2 logs",
+    "deploy:vercel": "vercel --prod",
+    "deploy:prod": "npm-run-all build deploy:vercel"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

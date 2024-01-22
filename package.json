@@ -25,8 +25,10 @@
     "pm2:stop": "pm2 stop main",
     "pm2:monit": "pm2 monit",
     "pm2:log": "pm2 logs",
-    "deploy:vercel": "vercel --prod",
-    "deploy:prod": "npm-run-all build deploy:vercel"
+    "vercel:dev": "vercel",
+    "vercel:prod": "vercel --prod",
+    "deploy:dev": "npm-run-all build vercel:dev",
+    "deploy:prod": "npm-run-all build vercel:prod"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

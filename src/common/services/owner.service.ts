@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Owner } from '../../models/owner/entities/owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-// import { v4 as uuidv4 } from 'uuid';
+import { ObjectId } from 'mongodb';
 import { owners as ownersData } from '../../database/seeders/owner/data';
-// import { IOwner } from '../../models/owner/interfaces/owner.interface';
 import { CreateOwnerDto } from '../dto/validators/createOwnerDto';
+import { Response } from '../dto/types/owner.types';
 
 @Injectable()
 export class OwnerService {
@@ -15,22 +19,35 @@ export class OwnerService {
   ) {}
 
   async findAll(): Promise<Owner[]> {
-    const owners = await this.ownerRepository.find();
-    console.log('owners ', owners);
-    return owners;
+    try {
+      return await this.ownerRepository.find();
+    } catch (error) {
+      throw new Error('Error al obtener Owners');
+    }
   }
 
-  async create(input: CreateOwnerDto): Promise<Owner> {
-    const owner = new Owner();
-    owner.firstName = input.firstName;
-    owner.lastName = input.lastName;
-    owner.email = input.email;
-    owner.password = input.password;
-
-    return this.ownerRepository.save(owner);
+  async findById(id: string): Promise<Owner> {
+    return await this.ownerRepository.findOneBy({
+      _id: new ObjectId(id),
+    });
   }
 
-  async seed(): Promise<void> {
+  async create(input: CreateOwnerDto): Promise<Response> {
+    try {
+      const owner = new Owner();
+      owner.firstName = input.firstName;
+      owner.lastName = input.lastName;
+      owner.email = input.email;
+      owner.password = input.password;
+      await this.ownerRepository.save(owner);
+
+      return { message: 'Owner was created succesfully' };
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  async seed(): Promise<Response> {
     const ownersCount = await this.ownerRepository.countDocuments();
     if (ownersCount < 2) {
       const ownerPromises = ownersData.map(async (owner) => {
@@ -39,6 +56,9 @@ export class OwnerService {
 
       const promises = await Promise.all(ownerPromises);
       console.log(promises);
+      return { message: 'Owners was created succesfully by seed.' };
+    } else {
+      return { message: 'There are Owners in database.' };
     }
   }
 }

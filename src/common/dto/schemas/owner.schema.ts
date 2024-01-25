@@ -6,7 +6,7 @@ export const OwnerSchema = new EntitySchema<Owner>({
   target: Owner,
   columns: {
     _id: {
-      type: Number,
+      type: String,
       primary: true,
       // generated: true,
     },

@@ -6,7 +6,7 @@ import { Response } from '../dto/types/owner.types';
 
 @Resolver(() => Section)
 export class SectionResolver {
-  constructor(private readonly sectionService: SectionService) {}
+  constructor(private sectionService: SectionService) {}
 
   /**
    *

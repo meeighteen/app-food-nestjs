@@ -16,7 +16,7 @@ import { Section } from 'src/models/section/entities/section.entity';
       type: 'mongodb',
       url: process.env.DB_URI,
       entities: [Owner, Business, Section],
-      synchronize: true,
+      synchronize: false,
       logging: true,
     }),
   ],

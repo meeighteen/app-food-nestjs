@@ -12,7 +12,7 @@ export class SectionService {
 
   async findAllSectionsByOwnerId(id: string): Promise<Section[]> {
     try {
-      return await this.sectionRepository.find();
+      return await this.sectionRepository.find({ where: { businessId: id } });
     } catch (error) {
       console.log(error);
       throw new Error('Error al obtener Secciones por duenio.');

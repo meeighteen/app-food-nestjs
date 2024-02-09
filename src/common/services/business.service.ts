@@ -21,8 +21,11 @@ export class BusinessService {
 
   async findById(id: string): Promise<Business> {
     try {
-      return await this.businessRepository.findOneBy({
-        _id: new ObjectId(id),
+      return await this.businessRepository.findOne({
+        where: { _id: new ObjectId(id) },
+        // relations: {
+        //   owner: true,
+        // },
       });
     } catch (error) {
       throw new Error('Error al obtener Business by ID');
@@ -34,12 +37,27 @@ export class BusinessService {
     business.name = input.name;
     business.description = input.description;
 
-    const owner = await this.ownerRepository.findOneBy({
-      _id: new ObjectId(input.ownerId),
+    const owner = await this.ownerRepository.findOne({
+      where: { _id: new ObjectId(input.ownerId) },
+      relations: {
+        businesses: true,
+      },
+      loadRelationIds: {
+        relations: [],
+      },
     });
-
-    business.ownerId = owner._id;
-
-    return this.businessRepository.save(business);
+    console.log('owner', owner);
+    // await this.ownerRepository.updateOne(
+    //   {
+    //     _id: new ObjectId(input.ownerId),
+    //   },
+    //   {
+    //     $push: {
+    //       businesses: business,
+    //     },
+    //   },
+    // );
+    return business;
+    // return this.businessRepository.save(business);
   }
 }

@@ -1,38 +1,48 @@
-import { Entity, Column, ObjectIdColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ObjectIdColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { IOwner } from '../interfaces/owner.interface';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Business } from 'src/models/business/entities/business.entity';
+import { IsOptional } from 'class-validator';
 
-/**
- * Entity Schema for Owner.
- *
- * @class
- */
 @ObjectType()
 @Entity()
 export class Owner implements IOwner {
-  @Field()
+  @Field(() => String)
   @ObjectIdColumn()
   _id: string;
 
-  @Field()
+  @Field(() => String)
   @Column()
   firstName: string;
 
-  @Field()
+  @Field(() => String)
   @Column()
   lastName: string;
 
-  @Field()
+  @Field(() => String)
   @Column({
     unique: true,
   })
   email: string;
 
-  @Field()
+  @Field(() => String)
   @Column()
   password: string;
 
-  @Field()
+  @Field(() => Boolean)
   @Column({ default: true })
   isActive: boolean;
+
+  @Field(() => [Business])
+  @OneToMany(() => Business, (business) => business.owner)
+  // @JoinColumn()
+  @IsOptional()
+  businesses: Business[];
 }

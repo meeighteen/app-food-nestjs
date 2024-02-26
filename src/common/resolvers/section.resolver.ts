@@ -1,8 +1,9 @@
 import { SectionService } from '../services/section.service';
 import { Section } from '../../models/section/entities/section.entity';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { CreateOwnerDto } from '../dto/validators/createOwnerDto';
+import { OwnerDto } from '../dto/validators/owner.dto';
 import { Response } from '../dto/types/owner.types';
+import { SectionDto } from '../dto/validators/section.dto';
 
 @Resolver(() => Section)
 export class SectionResolver {
@@ -13,30 +14,17 @@ export class SectionResolver {
    * @Queries Queries for Owner resolver
    */
 
-  //   @Query(() => [Owner], { name: 'getAllOwners' })
-  //   async getAllOwners(): Promise<Owner[]> {
-  //     return await this.ownerService.findAll();
-  //   }
-
   @Query(() => [Section], { name: 'findSectionsByOwnerId' })
   async findSectionsByOwnerId(
-    @Args('id', { type: () => String }) id: string,
+    @Args({ name: 'createOwnerInput', type: () => String }) id: string,
   ): Promise<Section[]> {
     return await this.sectionService.findAllSectionsByOwnerId(id);
   }
 
-  //   /**
-  //    * @Mutations Mutations for Owner resolver
-  //    */
-  //   @Mutation(() => Response, { name: 'createOwner' })
-  //   async createOwner(
-  //     @Args('createOwnerInput') createOwnerInput: CreateOwnerDto,
-  //   ): Promise<Response> {
-  //     return await this.ownerService.create(createOwnerInput);
-  //   }
-
-  //   @Mutation(() => Response, { name: 'getSeed' })
-  //   async getSeed(): Promise<Response> {
-  //     return this.ownerService.seed();
-  //   }
+  @Mutation(() => Response, { name: 'createSection' })
+  async createSection(
+    @Args('sectionData') sectionData: SectionDto,
+  ): Promise<Response> {
+    return await this.sectionService.createSection(sectionData);
+  }
 }

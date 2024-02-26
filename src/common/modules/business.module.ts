@@ -9,7 +9,7 @@ import { BusinessResolver } from '../resolvers/business.resolver';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Business, Owner])],
-  exports: [TypeOrmModule, BusinessResolver],
+  exports: [BusinessResolver],
   providers: [BusinessService, BusinessResolver],
 })
 export class BusinessModule {}

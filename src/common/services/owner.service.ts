@@ -5,9 +5,10 @@ import { MongoRepository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 import { owners as ownersData } from '../../database/seeders/owner/data';
 import { sections as sectionsData } from '../../database/seeders/section/data';
-import { CreateOwnerDto } from '../dto/validators/createOwnerDto';
+import { OwnerDto } from '../dto/validators/owner.dto';
 import { Response } from '../dto/types/owner.types';
 import { Section } from 'src/models/section/entities/section.entity';
+import { Business } from 'src/models/business/entities/business.entity';
 
 @Injectable()
 export class OwnerService {
@@ -16,6 +17,8 @@ export class OwnerService {
     private readonly ownerRepository: MongoRepository<Owner>,
     @InjectRepository(Section)
     private readonly sectionRepository: MongoRepository<Section>,
+    @InjectRepository(Section)
+    private readonly businessRepository: MongoRepository<Business>,
   ) {}
 
   async findAll(): Promise<Owner[]> {
@@ -32,13 +35,14 @@ export class OwnerService {
     });
   }
 
-  async create(input: CreateOwnerDto): Promise<Response> {
+  async create(input: OwnerDto): Promise<Response> {
     try {
-      const owner = new Owner();
-      owner.firstName = input.firstName;
-      owner.lastName = input.lastName;
-      owner.email = input.email;
-      owner.password = input.password;
+      const { ...ownerDetails } = input;
+      console.log('input =>', input);
+      const owner = this.ownerRepository.create({
+        ...ownerDetails,
+      });
+
       await this.ownerRepository.save(owner);
 
       return { message: 'Owner was created succesfully' };

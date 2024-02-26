@@ -7,7 +7,7 @@ export const owners: IOwner[] = [
     email: 'josuee.ald@gmail.com',
     password: 'josueTU1234',
     isActive: true,
-    businesses: [],
+    // businesses: [],
   },
   {
     firstName: 'Leandro',
@@ -15,6 +15,6 @@ export const owners: IOwner[] = [
     email: 'leandro1998@gmail.com',
     password: '12345678',
     isActive: true,
-    businesses: [],
+    // businesses: [],
   },
 ];

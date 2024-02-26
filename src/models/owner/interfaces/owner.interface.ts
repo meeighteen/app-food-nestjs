@@ -12,5 +12,5 @@ export interface IOwner {
   email: string;
   password: string;
   isActive: boolean;
-  businesses: Business[];
+  // businesses: Business[];
 }

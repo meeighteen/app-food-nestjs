@@ -1,9 +1,11 @@
 import { BusinessService } from '../services/business.service';
 import { Business } from 'src/models/business/entities/business.entity';
-// import { CreateBusinessDto } from '../dto/validators/CreateBusinessDto';
+import { CreateBusinessDto } from '../dto/validators/createBusiness.dto';
 
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateBusinessDto } from '../dto/validators/CreateBusinessDto';
+import { Response } from '../dto/types/owner.types';
+import { BusinessDto } from '../dto/validators/business.dto';
+// import { BusinessDto } from '../dto/validators/business.dto';
 
 @Resolver(() => Business)
 export class BusinessResolver {
@@ -16,15 +18,22 @@ export class BusinessResolver {
 
   @Query(() => Business, { name: 'getBusinessById' })
   async getBusinessById(
-    @Args('id', { type: () => String }) id: string,
+    @Args('businessId', { type: () => String }) id: string,
   ): Promise<Business> {
     return await this.businessService.findById(id);
   }
 
-  @Mutation(() => Business, { name: 'createBusiness' })
+  @Mutation(() => Response, { name: 'createBusiness' })
   async createBusiness(
-    @Args('input') input: CreateBusinessDto,
-  ): Promise<Business> {
+    @Args('businessData') input: CreateBusinessDto,
+  ): Promise<Response> {
     return await this.businessService.create(input);
+  }
+
+  @Mutation(() => Response, { name: 'updateBusiness' })
+  async updateBusiness(
+    @Args({ name: 'businessData', type: () => BusinessDto }) input: BusinessDto,
+  ): Promise<Response> {
+    return await this.businessService.update(input);
   }
 }

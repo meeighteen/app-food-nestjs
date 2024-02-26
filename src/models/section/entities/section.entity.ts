@@ -1,7 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
 import { ISection } from '../interfaces/section.interface';
-// import { IOwner } from '../interfaces/owner.interface';
 
 /**
  * Entity Schema for Owner.

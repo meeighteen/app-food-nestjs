@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Business } from 'src/models/business/entities/business.entity';
 import { MongoRepository } from 'typeorm';
-import { CreateBusinessDto } from '../dto/validators/CreateBusinessDto';
+// import { BusinessDto } from '../dto/validators/business.dto';
 import { ObjectId } from 'mongodb';
 import { Owner } from 'src/models/owner/entities/owner.entity';
+import { CreateBusinessDto } from '../dto/validators/createBusiness.dto';
+import { Response } from '../dto/types/owner.types';
+import { BusinessDto } from '../dto/validators/business.dto';
 
 @Injectable()
 export class BusinessService {
@@ -23,41 +26,64 @@ export class BusinessService {
     try {
       return await this.businessRepository.findOne({
         where: { _id: new ObjectId(id) },
-        // relations: {
-        //   owner: true,
-        // },
       });
     } catch (error) {
-      throw new Error('Error al obtener Business by ID');
+      throw new Error('Error finding owner by Id.');
     }
   }
 
-  async create(input: CreateBusinessDto): Promise<Business> {
-    const business = new Business();
-    business.name = input.name;
-    business.description = input.description;
+  async create(businessData: CreateBusinessDto): Promise<Response> {
+    try {
+      const { ownerId, ...businessInfo } = businessData;
+      const Owner = await this.ownerRepository.findOne({
+        where: {
+          _id: new ObjectId(ownerId),
+        },
+      });
 
-    const owner = await this.ownerRepository.findOne({
-      where: { _id: new ObjectId(input.ownerId) },
-      relations: {
-        businesses: true,
-      },
-      loadRelationIds: {
-        relations: [],
-      },
-    });
-    console.log('owner', owner);
-    // await this.ownerRepository.updateOne(
-    //   {
-    //     _id: new ObjectId(input.ownerId),
-    //   },
-    //   {
-    //     $push: {
-    //       businesses: business,
-    //     },
-    //   },
-    // );
-    return business;
-    // return this.businessRepository.save(business);
+      const detailsBusiness = { colorBg: '#fff', colorFt: '#fff', btns: [] };
+
+      if (Owner) {
+        const business = this.businessRepository.create({
+          ...businessInfo,
+          action: detailsBusiness,
+          information: detailsBusiness,
+          ownerId: Owner._id,
+        });
+        await this.businessRepository.save(business);
+
+        return { message: 'Business created succesfully' };
+      } else {
+        throw new Error('Owner does not exist');
+      }
+    } catch (error) {
+      throw new Error('Error creating a Business');
+    }
+  }
+
+  async update(businessData: BusinessDto): Promise<Response> {
+    try {
+      console.log(businessData);
+      const { businessId, ...businessInfo } = businessData;
+
+      const Business = await this.businessRepository.findOneAndUpdate(
+        {
+          _id: new ObjectId(businessId),
+        },
+        {
+          $set: { ...businessInfo },
+        },
+        { returnDocument: 'after' },
+      );
+
+      if (!Business) {
+        return { message: 'Business does not exist' };
+      }
+
+      return { message: 'Business updated succesfully' };
+    } catch (error) {
+      console.log(error);
+      throw new Error('Error updating a Business');
+    }
   }
 }

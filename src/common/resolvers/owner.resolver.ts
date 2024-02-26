@@ -1,7 +1,7 @@
 import { OwnerService } from '../services/owner.service';
 import { Owner } from '../../models/owner/entities/owner.entity';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { CreateOwnerDto } from '../dto/validators/createOwnerDto';
+import { OwnerDto } from '../dto/validators/owner.dto';
 import { Response } from '../dto/types/owner.types';
 
 @Resolver(() => Owner)
@@ -30,7 +30,8 @@ export class OwnerResolver {
    */
   @Mutation(() => Response, { name: 'createOwner' })
   async createOwner(
-    @Args('createOwnerInput') createOwnerInput: CreateOwnerDto,
+    @Args({ name: 'createOwnerInput', type: () => OwnerDto })
+    createOwnerInput: OwnerDto,
   ): Promise<Response> {
     return await this.ownerService.create(createOwnerInput);
   }

@@ -1,3 +1,5 @@
+import { Business } from 'src/models/business/entities/business.entity';
+
 /**
  * Owner variable type declaration.
  *
@@ -10,4 +12,5 @@ export interface IOwner {
   email: string;
   password: string;
   isActive: boolean;
+  // businesses: Business[];
 }

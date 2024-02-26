@@ -16,11 +16,12 @@ export class BusinessResolver {
     return await this.businessService.findAll();
   }
 
-  @Query(() => Business, { name: 'getBusinessById' })
-  async getBusinessById(
-    @Args('businessId', { type: () => String }) id: string,
-  ): Promise<Business> {
-    return await this.businessService.findById(id);
+  @Query(() => Business, { name: 'getBusinessByName' })
+  async getBusinessByName(
+    // @Args('businessId', { type: () => String }) id: string,
+    @Args('businessName', { type: () => String }) name: string,
+  ): Promise<Business | object> {
+    return await this.businessService.findByName(name);
   }
 
   @Mutation(() => Response, { name: 'createBusiness' })

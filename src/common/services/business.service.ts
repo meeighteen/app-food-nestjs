@@ -22,12 +22,15 @@ export class BusinessService {
     return await this.businessRepository.find();
   }
 
-  async findById(id: string): Promise<Business> {
+  async findByName(name: string): Promise<Business> {
     try {
       return await this.businessRepository.findOne({
-        where: { _id: new ObjectId(id) },
+        where: {
+          name,
+        },
       });
     } catch (error) {
+      console.log(error);
       throw new Error('Error finding owner by Id.');
     }
   }

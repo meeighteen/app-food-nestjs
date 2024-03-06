@@ -9,6 +9,7 @@ export class BusinessDto {
   businessId: string;
 
   @Field(() => String, { nullable: true })
+  @IsOptional()
   @IsString()
   name?: string;
 

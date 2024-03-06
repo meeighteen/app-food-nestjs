@@ -22,11 +22,11 @@ export class Section implements ISection {
   @Column()
   description: string;
 
-  @Field()
-  @Column()
-  businessId: string;
+  // @Field()
+  // @Column()
+  // businessId: string;
 
-  @Field()
-  @Column({ default: true })
-  isActive: boolean;
+  // @Field()
+  // @Column({ default: true })
+  // isActive: boolean;
 }

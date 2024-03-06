@@ -4,18 +4,18 @@ import { SectionDto } from './section.dto';
 
 @InputType()
 export class infoBusinessDto {
-  @Field()
+  @Field(() => String, { nullable: true })
   @IsOptional()
   @IsString()
   colorBg?: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @IsOptional()
   @IsString()
   colorFt?: string;
 
-  @Field()
+  @Field(() => [SectionDto], { nullable: true })
   @IsOptional()
   @IsObject()
-  btns?: SectionDto;
+  btns?: SectionDto[];
 }

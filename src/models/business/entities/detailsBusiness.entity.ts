@@ -7,11 +7,11 @@ import { Section } from 'src/models/section/entities/section.entity';
 @ObjectType()
 @Entity()
 export class detailsBusiness implements IDetailsBusiness {
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Column()
   colorBg: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Column()
   colorFt: string;
 

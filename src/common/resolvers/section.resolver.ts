@@ -21,10 +21,10 @@ export class SectionResolver {
     return await this.sectionService.findAllSectionsByOwnerId(id);
   }
 
-  @Mutation(() => Response, { name: 'createSection' })
-  async createSection(
-    @Args('sectionData') sectionData: SectionDto,
-  ): Promise<Response> {
-    return await this.sectionService.createSection(sectionData);
-  }
+  // @Mutation(() => Response, { name: 'createSection' })
+  // async createSection(
+  //   @Args('sectionData') sectionData: SectionDto,
+  // ): Promise<Response> {
+  //   return await this.sectionService.createSection(sectionData);
+  // }
 }

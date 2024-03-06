@@ -46,28 +46,28 @@ export class SectionService {
     }
   }
 
-  async createSection(sectionData: SectionDto): Promise<Response> {
-    try {
-      console.log('sectionData => ', sectionData);
-      const { businessId, ...sectionDetails } = sectionData;
-      const FoundBusiness = await this.businessRepository.findOne({
-        where: { _id: new ObjectId(businessId) },
-      });
+  // async createSection(sectionData: SectionDto): Promise<Response> {
+  //   try {
+  //     console.log('sectionData => ', sectionData);
+  //     const { businessId, ...sectionDetails } = sectionData;
+  //     const FoundBusiness = await this.businessRepository.findOne({
+  //       where: { _id: new ObjectId(businessId) },
+  //     });
 
-      if (FoundBusiness) {
-        const section = this.sectionRepository.create({
-          businessId,
-          ...sectionDetails,
-        });
-        await this.sectionRepository.save(section);
+  //     if (FoundBusiness) {
+  //       const section = this.sectionRepository.create({
+  //         businessId,
+  //         ...sectionDetails,
+  //       });
+  //       await this.sectionRepository.save(section);
 
-        return { message: 'Section created succesfully.' };
-      } else {
-        return { message: 'Business does not exist.' };
-      }
-    } catch (error) {
-      console.log(error);
-      throw new Error('Error creating Section.');
-    }
-  }
+  //       return { message: 'Section created succesfully.' };
+  //     } else {
+  //       return { message: 'Business does not exist.' };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new Error('Error creating Section.');
+  //   }
+  // }
 }

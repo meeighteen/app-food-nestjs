@@ -4,17 +4,18 @@ import { BusinessDto } from './business.dto';
 
 @InputType()
 export class SectionDto {
-  @Field()
+  @Field(() => String, { nullable: true })
+  @IsOptional()
   @IsString()
-  name: string;
+  name?: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @IsOptional()
   @IsString()
   description?: string;
 
-  @Field(() => String)
-  @IsOptional()
-  @IsString()
-  businessId: string;
+  // @Field(() => String)
+  // @IsOptional()
+  // @IsString()
+  // businessId: string;
 }
